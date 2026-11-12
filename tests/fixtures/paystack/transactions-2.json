@@ -1,0 +1,4 @@
+{"status":true,"meta":{"total":3,"page":2,"pageCount":2,"perPage":2},"data":[
+{"id":1003,"reference":"ref-1003","status":"success","amount":2000,"currency":"USD","paid_at":"2026-10-25T10:00:00.000Z","plan":{},"plan_object":{"plan_code":"PLN_prof"}},
+{"id":1004,"reference":"ref-1004","status":"reversed","amount":7000,"currency":"USD","paid_at":"2026-10-26T10:00:00.000Z","plan":{"plan_code":"PLN_prof"}},
+{"id":1005,"reference":"ref-1005","status":"failed","amount":1,"currency":"USD","paid_at":"2026-10-26T10:00:00.000Z","plan":{"plan_code":"PLN_prof"}}]}

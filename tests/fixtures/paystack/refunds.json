@@ -1,0 +1,6 @@
+{"status":true,"meta":{"total":3,"page":1,"pageCount":1,"perPage":50},"data":[
+{"id":77,"transaction":1001,"transaction_reference":"ref-1001","amount":500000,"currency":"NGN","status":"processed","createdAt":"2026-10-26T10:00:00.000Z"},
+{"id":78,"transaction":1002,"transaction_reference":"ref-1002","amount":900000,"currency":"NGN","status":"processed","createdAt":"2026-10-26T11:00:00.000Z"},
+{"id":79,"transaction":500,"transaction_reference":"ref-0500","amount":3000,"currency":"USD","status":"processed","createdAt":"2026-10-27T11:00:00.000Z"},
+{"id":80,"transaction":1004,"transaction_reference":"ref-1004","amount":7000,"currency":"USD","status":"processed","createdAt":"2026-10-27T12:00:00.000Z"},
+{"id":81,"transaction_reference":"ref-0600","amount":4000,"currency":"USD","status":"processed","createdAt":"2026-10-27T13:00:00.000Z"}]}

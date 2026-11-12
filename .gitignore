@@ -1,2 +1,43 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js / build
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# testing
+coverage/
+
+# env files (secrets) — keep the example tracked
 .env
-.vscode
+.env*
+!.env.example
+
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# agent scratch
+.superpowers/
+scratch/
+
+# local real-data snapshot (npm run snapshot:local)
+.snapshot.local.json
+
+# runtime snapshot store (Coolify volume)
+/data/
+.next-verify/

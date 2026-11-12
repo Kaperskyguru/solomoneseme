@@ -1,0 +1,6 @@
+{"success":true,"products":[
+{"id":"pA","name":"Free Guide","short_url":"https://gum.co/a","thumbnail_url":"https://img/a.png","formatted_price":"$0+","sales_count":50},
+{"id":"pB","name":"Paid Book","short_url":"https://gum.co/b","thumbnail_url":null,"preview_url":"https://img/b.png","formatted_price":"$19","sales_count":120},
+{"id":"pX","name":"Hidden","short_url":"https://gum.co/x","thumbnail_url":null,"preview_url":null,"formatted_price":"$5","sales_count":999},
+{"id":"pC","name":"No Cover","short_url":"https://gum.co/c","thumbnail_url":null,"preview_url":null,"formatted_price":"$9","sales_count":10}
+]}

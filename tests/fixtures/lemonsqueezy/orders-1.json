@@ -1,0 +1,47 @@
+{
+  "data": [
+    {
+      "id": "1001",
+      "attributes": {
+        "total": 4900,
+        "currency": "USD",
+        "status": "paid",
+        "refunded": false,
+        "refunded_amount": 0,
+        "refunded_at": null,
+        "created_at": "2026-10-20T10:00:00.000000Z",
+        "updated_at": "2026-10-20T10:00:00.000000Z",
+        "subtotal": 4500,
+        "tax": 400,
+        "discount_total": 0,
+        "first_order_item": {
+          "product_id": 257073,
+          "price": 4500
+        }
+      }
+    },
+    {
+      "id": "1002",
+      "attributes": {
+        "total": 9900,
+        "currency": "USD",
+        "status": "partial_refund",
+        "refunded": true,
+        "refunded_amount": 2500,
+        "refunded_at": "2026-10-22T08:00:00.000000Z",
+        "created_at": "2026-10-18T10:00:00.000000Z",
+        "updated_at": "2026-10-22T08:00:00.000000Z",
+        "subtotal": 9000,
+        "tax": 900,
+        "discount_total": 0,
+        "first_order_item": {
+          "product_id": 257073,
+          "price": 9000
+        }
+      }
+    }
+  ],
+  "links": {
+    "next": "https://api.lemonsqueezy.com/v1/orders?filter[store_id]=82309&page[number]=2&page[size]=100"
+  }
+}

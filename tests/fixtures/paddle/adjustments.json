@@ -1,0 +1,6 @@
+{"data":[
+{"id":"adj_1","action":"refund","status":"approved","transaction_id":"txn_prof","currency_code":"USD","created_at":"2026-10-28T10:00:00.000Z","totals":{"total":"1900"},"items":[{"item_id":"txnitm_p","totals":{"total":"1900"}}]},
+{"id":"adj_old","action":"refund","status":"approved","transaction_id":"txn_old","currency_code":"USD","created_at":"2026-10-30T10:00:00.000Z","totals":{"total":"1000"},"items":[{"item_id":"txnitm_o","totals":{"total":"1000"}}]},
+{"id":"adj_2","action":"refund","status":"approved","transaction_id":"txn_mb","currency_code":"USD","created_at":"2026-10-28T11:00:00.000Z","totals":{"total":"9900"},"items":[{"item_id":"txnitm_m","totals":{"total":"9900"}}]},
+{"id":"adj_3","action":"refund","status":"approved","transaction_id":"txn_mix","currency_code":"EUR","created_at":"2026-10-29T11:00:00.000Z","totals":{"total":"5800","tax":"300"},"items":[{"item_id":"txnitm_a","totals":{"total":"1800","tax":"300"}},{"item_id":"txnitm_b","totals":{"total":"4000"}}]}],
+"meta":{"pagination":{"per_page":200,"next":"https://api.paddle.com/adjustments?after=adj_3","has_more":false}}}

@@ -1,0 +1,1 @@
+{"data":{"id":"txn_old","status":"completed","billed_at":"2026-08-01T10:00:00.000Z","currency_code":"USD","details":{"line_items":[{"id":"txnitm_o","price_id":"pri_prof","totals":{"total":"1000"}}]}}}

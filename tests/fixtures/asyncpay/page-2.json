@@ -1,0 +1,77 @@
+{
+ "message": "ok",
+ "status": true,
+ "data": {
+  "payment_requests": {
+   "current_page": 2,
+   "data": [
+    {
+     "uuid": "u6",
+     "ref": "AsP-fake6",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "scholarship_page"
+     },
+     "status": "successful",
+     "created_at": "2026-09-30T23:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-10-01T00:30:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u7",
+     "ref": "AsP-fake7",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "scholarship_page"
+     },
+     "status": "successful",
+     "created_at": "2026-08-01T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-08-01T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u8",
+     "ref": "AsP-fake8",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {},
+     "status": "successful",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    }
+   ],
+   "next_page_url": null,
+   "per_page": 50
+  }
+ }
+}
