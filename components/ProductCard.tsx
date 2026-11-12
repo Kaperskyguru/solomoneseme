@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Product } from "@/config/schema";
-import { formatMoneyList, providerName } from "@/lib/format";
+import { ONE_OFF_TITLE, providerName, revenuePillText } from "@/lib/format";
 import { withRef } from "@/lib/links";
 import type { ProductRevenue } from "@/lib/revenue/types";
 import { ArrowUpRight } from "./icons";
@@ -45,7 +45,7 @@ export function ProductCard({
 }) {
   const archived = isArchived(product);
   const providers = [...new Set(product.sources.map((s) => providerName(s.provider)))];
-  const title = providers.length ? `Last 30 days, from ${providers.join(", ")}` : undefined;
+  const title = product.revenueModel === "one-off" ? ONE_OFF_TITLE : providers.length ? `Last 30 days, from ${providers.join(", ")}` : undefined;
   // MasteringBackend's revenue is private: never an amount, never a line.
   const showRevenue = product.group !== "mb";
   return (
@@ -81,7 +81,7 @@ export function ProductCard({
             title={title}
             className="shrink-0 rounded-full bg-surface px-2 py-0.5 text-xs font-medium tabular-nums"
           >
-            {formatMoneyList(revenue?.last30 ?? {}, "/mo")}
+            {revenuePillText(product, revenue)}
           </span>
         )}
       </div>

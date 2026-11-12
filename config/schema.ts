@@ -23,6 +23,7 @@ export const ProductSchema = z.object({
   tagline: z.string().min(1),
   group: z.enum(["mb", "solo"]),
   sources: z.array(SourceSchema),
+  revenueModel: z.enum(["recurring", "one-off"]).default("recurring").optional(),
   badge: z.object({ kind: z.enum(["sold", "shutdown", "archived"]), label: z.string().min(1) }).optional(),
 });
 export type Product = z.infer<typeof ProductSchema>;

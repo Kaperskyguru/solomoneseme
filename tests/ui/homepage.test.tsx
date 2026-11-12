@@ -131,7 +131,7 @@ describe("homepage", () => {
     await renderHome(null);
     const pills = screen.getAllByTestId("revenue-pill").map((p) => p.textContent);
     expect(pills.length).toBeGreaterThan(0);
-    expect(pills.every((p) => p === "$0/mo")).toBe(true);
+    expect(pills.every((p) => p === "$0/mo" || p === "$0 · 12 mo")).toBe(true);
     expect(screen.getByTestId("chart-headline").textContent).toBe("$0 in 12 months");
     expect(document.querySelector("#github")).toBeNull();
   });

@@ -183,6 +183,25 @@ describe("ProductCard", () => {
     expect(screen.getByTestId("revenue-pill").textContent).toBe("$0/mo");
     expect(screen.getByTestId("sparkline-last").getAttribute("d")).toBe("M0.0,56.0 L300.0,56.0");
   });
+  it("one-off: 12-month sum per currency, single ' · 12 mo' suffix, explanatory tooltip", () => {
+    const bs = products.find((p) => p.id === "boilerplatesearch")!;
+    const r = rev("boilerplatesearch", { USD: 0 }, [mp("2026-05", { USD: 2000, NGN: 100000 }), mp("2026-09", { USD: 3000, NGN: 50000 })]);
+    render(<ProductCard product={bs} revenue={r} />);
+    const pill = screen.getByTestId("revenue-pill");
+    expect(pill.textContent).toBe("$50 · ₦1,500 · 12 mo");
+    expect(pill.getAttribute("title")).toBe("Total revenue over the last 12 months (one-off sales, not monthly recurring)");
+  });
+  it("one-off empty shows $0 · 12 mo; recurring stays /mo; MB card has no pill", () => {
+    const bs = products.find((p) => p.id === "boilerplatesearch")!;
+    render(<ProductCard product={bs} />);
+    expect(screen.getByTestId("revenue-pill").textContent).toBe("$0 · 12 mo");
+    cleanup();
+    render(<ProductCard product={profaily} revenue={rev("profaily", { USD: 1000 }, [mp("2026-10", { USD: 99999 })])} />);
+    expect(screen.getByTestId("revenue-pill").textContent).toBe("$10/mo");
+    cleanup();
+    render(<ProductCard product={products.find((p) => p.group === "mb")!} />);
+    expect(screen.queryByTestId("revenue-pill")).toBeNull();
+  });
   it("multi-line tagline keeps text-pretty; the single-line variant must not (it would undo truncate's nowrap)", () => {
     render(<ProductCard product={profaily} />);
     expect(screen.getByTestId("card-tagline").className).toContain("line-clamp-2 text-pretty");

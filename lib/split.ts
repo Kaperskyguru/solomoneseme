@@ -1,6 +1,6 @@
 import type { Product } from "@/config/schema";
 import { books } from "@/config/books";
-import { sortCurrencies } from "@/lib/format";
+import { sortCurrencies, twelveMonthTotal } from "@/lib/format";
 import type { Money, MonthPoint, ProductRevenue } from "@/lib/revenue/types";
 import type { Snapshot } from "@/lib/snapshot/types";
 
@@ -9,6 +9,7 @@ export const booksProduct: Product = {
   name: "Books",
   tagline: "Books on backend engineering.",
   group: "solo",
+  revenueModel: "one-off",
 };
 
 const hasMoney = (m: Money) => Object.values(m).some((v) => v !== 0);
@@ -25,7 +26,10 @@ export function splitProducts(
   const compact: Product[] = [];
   for (const p of list) (isTracked(p, revenue) ? cards : compact).push(p);
   cards.push(booksProduct);
-  const last = (p: Product, c: string) => revenue[p.id]?.last30[c] ?? 0;
+  const last = (p: Product, c: string) => {
+    const r = revenue[p.id];
+    return p.revenueModel === "one-off" ? twelveMonthTotal(r)[c] ?? 0 : r?.last30[c] ?? 0;
+  };
   cards.sort((a, b) => last(b, "USD") - last(a, "USD") || last(b, "NGN") - last(a, "NGN"));
   return { cards, compact };
 }

@@ -1,4 +1,4 @@
-import type { Money } from "@/lib/revenue/types";
+import type { Money, ProductRevenue } from "@/lib/revenue/types";
 
 const PROVIDER_NAMES: Record<string, string> = {
   paystack: "Paystack",
@@ -51,4 +51,19 @@ export function formatShortDate(iso: string, now: Date = new Date()): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
   return d.getUTCFullYear() === now.getUTCFullYear() ? SHORT_FMT.format(d) : DATE_FMT.format(d);
+}
+
+export const ONE_OFF_TITLE = "Total revenue over the last 12 months (one-off sales, not monthly recurring)";
+
+/** Sum of the 12 monthly totals, per currency. */
+export function twelveMonthTotal(r?: ProductRevenue): Money {
+  const out: Money = {};
+  for (const m of r?.months ?? []) for (const [c, v] of Object.entries(m.totals)) out[c] = (out[c] ?? 0) + v;
+  return out;
+}
+
+/** Pill text: recurring → last-30-days "/mo"; one-off → 12-month total with a single " · 12 mo" suffix. */
+export function revenuePillText(p: { revenueModel?: "recurring" | "one-off" }, r?: ProductRevenue): string {
+  if (p.revenueModel !== "one-off") return formatMoneyList(r?.last30 ?? {}, "/mo");
+  return `${formatMoneyList(twelveMonthTotal(r))} · 12 mo`;
 }

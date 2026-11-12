@@ -1,5 +1,5 @@
 import type { Product } from "@/config/schema";
-import { formatMoneyList } from "@/lib/format";
+import { revenuePillText } from "@/lib/format";
 import { withRef } from "@/lib/links";
 import type { ProductRevenue } from "@/lib/revenue/types";
 import { Badge, isArchived } from "./ProductCard";
@@ -18,7 +18,7 @@ export function CompactList({ products, revenue = {} }: { products: Product[]; r
     <ul className="mt-12 grid gap-x-8 sm:grid-cols-2 xl:grid-cols-3">
       {products.map((p) => {
         const archived = isArchived(p);
-        const pill = p.badge ? p.badge.label : p.group === "mb" ? null : formatMoneyList(revenue[p.id]?.last30 ?? {}, "/mo");
+        const pill = p.badge ? p.badge.label : p.group === "mb" ? null : revenuePillText(p, revenue[p.id]);
         return (
           <li key={p.id}>
             <article

@@ -15,6 +15,7 @@ export const products: Product[] = [
     icon: "/img/products/boilerplatesearch.png",
     tagline: "A directory of Boilerplates and Boilerplate marketplace",
     group: "solo",
+    revenueModel: "one-off",
     sources: [{ provider: "lemonsqueezy", storeId: "82309", productIds: ["257073", "654164", "1213591"] }],
   },
   { id: "contentre", name: "Contentre", url: "https://contentre.io", tagline: "Become a Certified Technical Writer", group: "solo", sources: [], badge: { kind: "archived", label: "Archived" } },
@@ -33,6 +34,7 @@ export const products: Product[] = [
     icon: "/img/products/masteringai.png",
     tagline: "Learn to build with AI, from first prompt to shipped product.",
     group: "solo",
+    revenueModel: "one-off",
     sources: [
       {
         provider: "asyncpay",
