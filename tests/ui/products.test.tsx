@@ -184,12 +184,12 @@ describe("ProductCard", () => {
     expect(screen.getByTestId("revenue-pill").textContent).toBe("$0/mo");
     expect(screen.getByTestId("sparkline-last").getAttribute("d")).toBe("M0.0,56.0 L300.0,56.0");
   });
-  it("one-off: lifetime per currency, single ' total' suffix, explanatory tooltip", () => {
+  it("one-off: lifetime per currency, no suffix, explanatory tooltip", () => {
     const bs = products.find((p) => p.id === "boilerplatesearch")!;
     const r = { ...rev("boilerplatesearch", { USD: 0 }, [mp("2026-05", { USD: 2000 })]), lifetime: { USD: 104000, NGN: 276000000 } };
     render(<ProductCard product={bs} revenue={r} />);
     const pill = screen.getByTestId("revenue-pill");
-    expect(pill.textContent).toBe("$1,040 · ₦2,760,000 total");
+    expect(pill.textContent).toBe("$1,040 · ₦2,760,000");
     expect(pill.getAttribute("title")).toBe("Total revenue to date (one-off sales, not monthly recurring)");
   });
   it("one-off from an old snapshot without lifetime falls back to summing months", () => {
@@ -197,7 +197,7 @@ describe("ProductCard", () => {
     const old: Partial<ProductRevenue> = rev("boilerplatesearch", { USD: 0 }, [mp("2026-05", { USD: 2000 }), mp("2026-09", { USD: 3000 })]);
     delete old.lifetime;
     render(<ProductCard product={bs} revenue={old as ProductRevenue} />);
-    expect(screen.getByTestId("revenue-pill").textContent).toBe("$50 total");
+    expect(screen.getByTestId("revenue-pill").textContent).toBe("$50");
   });
   it("one-off sorts by lifetime", () => {
     const bs = products.find((p) => p.id === "boilerplatesearch")!;
@@ -207,7 +207,7 @@ describe("ProductCard", () => {
   it("one-off empty shows $0 total; recurring stays /mo; MB card has no pill", () => {
     const bs = products.find((p) => p.id === "boilerplatesearch")!;
     render(<ProductCard product={bs} />);
-    expect(screen.getByTestId("revenue-pill").textContent).toBe("$0 total");
+    expect(screen.getByTestId("revenue-pill").textContent).toBe("$0");
     cleanup();
     render(<ProductCard product={profaily} revenue={rev("profaily", { USD: 1000 }, [mp("2026-10", { USD: 99999 })])} />);
     expect(screen.getByTestId("revenue-pill").textContent).toBe("$10/mo");

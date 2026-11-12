@@ -67,8 +67,8 @@ export function lifetimeTotal(r?: ProductRevenue): Money {
   return (r as Partial<ProductRevenue> | undefined)?.lifetime ?? twelveMonthTotal(r);
 }
 
-/** Pill text: recurring → last-30-days "/mo"; one-off → lifetime total with a single " total" suffix. */
+/** Pill text: recurring → last-30-days "/mo"; one-off → lifetime total, no suffix. */
 export function revenuePillText(p: { revenueModel?: "recurring" | "one-off" }, r?: ProductRevenue): string {
   if (p.revenueModel !== "one-off") return formatMoneyList(r?.last30 ?? {}, "/mo");
-  return `${formatMoneyList(lifetimeTotal(r))} total`;
+  return formatMoneyList(lifetimeTotal(r));
 }
