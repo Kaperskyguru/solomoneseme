@@ -24,6 +24,8 @@ export const ProductSchema = z.object({
   group: z.enum(["mb", "solo"]),
   sources: z.array(SourceSchema),
   revenueModel: z.enum(["recurring", "one-off"]).default("recurring").optional(),
+  /** Revenue no API can see: lifetime = totals + API txns dated after `asOf` (UTC day). */
+  revenueBaseline: z.object({ asOf: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), totals: z.record(z.string(), z.number()), note: z.string().optional() }).optional(),
   badge: z.object({ kind: z.enum(["sold", "shutdown", "archived"]), label: z.string().min(1) }).optional(),
 });
 export type Product = z.infer<typeof ProductSchema>;

@@ -37,6 +37,18 @@ describe("fetchAllRevenue", () => {
     expect(p.productId).toBe("empty");
   });
 
+  it("one-off products fetch Lemon Squeezy all-time and lifetime keeps pre-window orders; recurring keeps 13 months", async () => {
+    vi.mocked(fetchLemonSqueezy).mockResolvedValue([{ id: "old", at: new Date("2022-01-01T00:00:00Z"), amountMinor: 700, currency: "USD", kind: "payment" }]);
+    const r = await fetchAllRevenue([{ ...mk("oo", "solo", [ls]), revenueModel: "one-off" }, mk("rec", "solo", [ls])], now);
+    const oo = r.oo;
+    if (oo instanceof Error) throw oo;
+    expect(oo.lifetime).toEqual({ USD: 700 });
+    expect(oo.last30).toEqual({});
+    const sinces = vi.mocked(fetchLemonSqueezy).mock.calls.map((c) => c[1].getTime());
+    expect(sinces).toContain(0);
+    expect(sinces).toContain(new Date("2025-10-12T12:00:00.000Z").getTime());
+  });
+
   it("one failing source makes the product an Error, others unaffected", async () => {
     vi.mocked(fetchPaystack).mockRejectedValueOnce(new Error("boom"));
     vi.mocked(fetchLemonSqueezy).mockResolvedValue([{ id: "a", at: new Date("2026-11-01T00:00:00Z"), amountMinor: 500, currency: "USD", kind: "payment" }]);
@@ -56,13 +68,13 @@ describe("fetchAllRevenue", () => {
     expect(fetchGumroad).toHaveBeenCalledTimes(1); // the books pseudo-product only
   });
 
-  it("fetches from 13 months back, includes books, routes asyncpay", async () => {
+  it("reads asyncpay all-time, includes books, routes asyncpay", async () => {
     const asyncSrc: Product["sources"][number] = { provider: "asyncpay", account: "mb_shared", filter: { field: "meta_data.source", values: ["x"] } };
     const r = await fetchAllRevenue([mk("ai", "solo", [asyncSrc])], now);
     expect(r.books).toBeDefined();
     expect(fetchGumroad).toHaveBeenCalledTimes(1);
     const since = vi.mocked(fetchAsyncpay).mock.calls[0][1];
-    expect(since.toISOString()).toBe("2025-10-12T12:00:00.000Z");
+    expect(since.getTime()).toBe(0); // AsyncPay reads every page; lifetime needs pre-window payments
   });
 
   it("an unconfigured REPLACE_ME product is an Error and is never fetched", async () => {

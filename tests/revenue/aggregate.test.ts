@@ -35,3 +35,31 @@ describe("aggregate", () => {
     expect(month(r, "2026-08")).toEqual({});
   });
 });
+
+describe("aggregate lifetime", () => {
+  it("includes pre-window txns and subtracts refunds, per currency", () => {
+    const r = aggregate(
+      [txn("2020-01-05T00:00:00Z", 10000), txn("2026-11-01T00:00:00Z", 500), refund("2021-03-01T00:00:00Z", 2500), txn("2022-02-02T00:00:00Z", 900000, "NGN"), txn("2023-01-01T00:00:00Z", 100, "EUR"), refund("2023-01-02T00:00:00Z", 100, "EUR")],
+      NOW,
+    );
+    expect(r.lifetime).toEqual({ USD: 8000, NGN: 900000 });
+    expect(r.last30).toEqual({ USD: 500 });
+    expect(r.months.every((m) => m.totals.NGN === undefined)).toBe(true);
+  });
+});
+
+describe("aggregate lifetime with a baseline", () => {
+  const baseline = { asOf: "2026-11-05", totals: { USD: 146682 } };
+  it("adds only txns after the asOf day; the asOf day itself is covered by the baseline", () => {
+    const r = aggregate(
+      [txn("2026-10-01T00:00:00Z", 1000), txn("2026-11-05T23:59:59Z", 2000), txn("2026-11-06T00:00:00Z", 300), refund("2026-11-07T00:00:00Z", 100), txn("2026-11-08T00:00:00Z", 50, "NGN")],
+      NOW,
+      baseline,
+    );
+    expect(r.lifetime).toEqual({ USD: 146682 + 300 - 100, NGN: 50 });
+    expect(r.last30).toEqual({ USD: 2200, NGN: 50 }); // API-only, baseline not in the window
+  });
+  it("without a baseline every txn counts", () => {
+    expect(aggregate([txn("2026-11-05T12:00:00Z", 2000), txn("2020-01-01T00:00:00Z", 10)], NOW).lifetime).toEqual({ USD: 2010 });
+  });
+});

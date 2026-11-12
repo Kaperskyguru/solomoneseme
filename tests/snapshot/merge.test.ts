@@ -5,7 +5,7 @@ import type { ProductRevenue } from "@/lib/revenue/types";
 
 const now = new Date("2026-11-12T10:00:00Z");
 const rev = (id: string, at: string): ProductRevenue =>
-  ({ productId: id, last30: { USD: 100 } as never, months: [], updatedAt: at }) as ProductRevenue;
+  ({ productId: id, last30: { USD: 100 } as never, lifetime: {}, months: [], updatedAt: at }) as ProductRevenue;
 const post = { title: "t", url: "https://x/y", date: "2026-11-01" };
 const prev: Snapshot = {
   generatedAt: "2026-11-12T09:00:00Z",

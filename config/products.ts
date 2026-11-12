@@ -16,6 +16,7 @@ export const products: Product[] = [
     tagline: "A directory of Boilerplates and Boilerplate marketplace",
     group: "solo",
     revenueModel: "one-off",
+    revenueBaseline: { asOf: "2026-11-12", totals: { USD: 146682 }, note: "Owner-reported total to date (includes shared revenue)" },
     sources: [{ provider: "lemonsqueezy", storeId: "82309", productIds: ["257073", "654164", "1213591"] }],
   },
   { id: "contentre", name: "Contentre", url: "https://contentre.io", tagline: "Become a Certified Technical Writer", group: "solo", sources: [], badge: { kind: "archived", label: "Archived" } },

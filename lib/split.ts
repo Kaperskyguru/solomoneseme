@@ -1,6 +1,6 @@
 import type { Product } from "@/config/schema";
 import { books } from "@/config/books";
-import { sortCurrencies, twelveMonthTotal } from "@/lib/format";
+import { lifetimeTotal, sortCurrencies } from "@/lib/format";
 import type { Money, MonthPoint, ProductRevenue } from "@/lib/revenue/types";
 import type { Snapshot } from "@/lib/snapshot/types";
 
@@ -28,7 +28,7 @@ export function splitProducts(
   cards.push(booksProduct);
   const last = (p: Product, c: string) => {
     const r = revenue[p.id];
-    return p.revenueModel === "one-off" ? twelveMonthTotal(r)[c] ?? 0 : r?.last30[c] ?? 0;
+    return p.revenueModel === "one-off" ? lifetimeTotal(r)[c] ?? 0 : r?.last30[c] ?? 0;
   };
   cards.sort((a, b) => last(b, "USD") - last(a, "USD") || last(b, "NGN") - last(a, "NGN"));
   return { cards, compact };

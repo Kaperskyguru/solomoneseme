@@ -53,7 +53,7 @@ export function formatShortDate(iso: string, now: Date = new Date()): string {
   return d.getUTCFullYear() === now.getUTCFullYear() ? SHORT_FMT.format(d) : DATE_FMT.format(d);
 }
 
-export const ONE_OFF_TITLE = "Total revenue over the last 12 months (one-off sales, not monthly recurring)";
+export const ONE_OFF_TITLE = "Total revenue to date (one-off sales, not monthly recurring)";
 
 /** Sum of the 12 monthly totals, per currency. */
 export function twelveMonthTotal(r?: ProductRevenue): Money {
@@ -62,8 +62,13 @@ export function twelveMonthTotal(r?: ProductRevenue): Money {
   return out;
 }
 
-/** Pill text: recurring → last-30-days "/mo"; one-off → 12-month total with a single " · 12 mo" suffix. */
+/** All-time total; old snapshots without `lifetime` fall back to the 12 monthly totals. */
+export function lifetimeTotal(r?: ProductRevenue): Money {
+  return (r as Partial<ProductRevenue> | undefined)?.lifetime ?? twelveMonthTotal(r);
+}
+
+/** Pill text: recurring → last-30-days "/mo"; one-off → lifetime total with a single " total" suffix. */
 export function revenuePillText(p: { revenueModel?: "recurring" | "one-off" }, r?: ProductRevenue): string {
   if (p.revenueModel !== "one-off") return formatMoneyList(r?.last30 ?? {}, "/mo");
-  return `${formatMoneyList(twelveMonthTotal(r))} · 12 mo`;
+  return `${formatMoneyList(lifetimeTotal(r))} total`;
 }

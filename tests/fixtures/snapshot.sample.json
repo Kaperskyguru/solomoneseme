@@ -7,6 +7,10 @@
         "USD": 98720,
         "NGN": 3600000
       },
+      "lifetime": {
+        "USD": 900820,
+        "NGN": 32850000
+      },
       "months": [
         {
           "month": "2025-12",
@@ -112,6 +116,9 @@
       "last30": {
         "USD": 36480
       },
+      "lifetime": {
+        "USD": 332879
+      },
       "months": [
         {
           "month": "2025-12",
@@ -205,6 +212,10 @@
       "last30": {
         "USD": 187600,
         "NGN": 3600000
+      },
+      "lifetime": {
+        "USD": 1711850,
+        "NGN": 32850000
       },
       "months": [
         {
@@ -310,6 +321,9 @@
       "productId": "books",
       "last30": {
         "USD": 63120
+      },
+      "lifetime": {
+        "USD": 575970
       },
       "months": [
         {

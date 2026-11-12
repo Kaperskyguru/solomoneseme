@@ -21,6 +21,7 @@ const mp = (month: string, totals: Record<string, number>, partial = false): Mon
 const rev = (productId: string, last30: Record<string, number>, months: MonthPoint[]): ProductRevenue => ({
   productId,
   last30,
+  lifetime: {},
   months,
   updatedAt: "2026-11-12T00:00:00Z",
 });
