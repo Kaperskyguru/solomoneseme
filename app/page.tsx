@@ -46,7 +46,7 @@ export default async function Home() {
             <RevenueChart {...chart} />
             <div className="mt-12">
               <SectionHeader title="My products" right={products.length} />
-              <ul data-testid="product-cards" className="grid gap-4 sm:grid-cols-2">
+              <ul data-testid="product-cards" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <li>
                   <MbCard mb={site.mb} live={snapshot?.mbStats} />
                 </li>

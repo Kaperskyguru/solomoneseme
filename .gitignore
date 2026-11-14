@@ -41,3 +41,4 @@ scratch/
 # runtime snapshot store (Coolify volume)
 /data/
 .next-verify/
+.taste-skill/

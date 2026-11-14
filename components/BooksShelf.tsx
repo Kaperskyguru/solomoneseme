@@ -27,9 +27,9 @@ function Face({ book, width }: { book: Book; width: number }) {
 }
 
 /** A 5:8 book: optional page-edge strip (10px, skewed) + face with spine shading. */
-function Cover({ book, width, pages = false }: { book: Book; width: number; pages?: boolean }) {
+function Cover({ book, width, pages = false, fluid = false }: { book: Book; width: number; pages?: boolean; fluid?: boolean }) {
   return (
-    <span className="relative block aspect-[5/8]" style={{ width }}>
+    <span className="relative block aspect-[5/8]" style={fluid ? undefined : { width }}>
       {pages && (
         <span aria-hidden="true" className="book-pages absolute top-[6px] bottom-[4px] left-[calc(100%-2px)] w-[10px] -skew-y-[8deg] rounded-r-[4px]" />
       )}
@@ -81,11 +81,11 @@ export function BooksShelf({ books }: { books: Book[] }) {
         </div>
       </div>
       {rest.length > 0 && (
-        <ul className="-mx-5 mt-8 flex snap-x gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
+        <ul data-testid="shelf" className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(56px,1fr))] gap-3 sm:grid-cols-[repeat(auto-fill,minmax(64px,1fr))]">
           {rest.map((b) => (
-            <li key={b.id} className="shrink-0 snap-start">
+            <li key={b.id}>
               <a href={withRef(b.url)} target="_blank" rel="noopener" title={bookLabel(b)} className="block transition-transform hover:-translate-y-0.5">
-                <Cover book={b} width={64} />
+                <Cover book={b} width={64} fluid />
               </a>
             </li>
           ))}
