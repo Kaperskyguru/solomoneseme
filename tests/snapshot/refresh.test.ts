@@ -7,12 +7,17 @@ vi.mock("node:fs/promises", () => ({ readFile: vi.fn() }));
 import { readFile } from "node:fs/promises";
 import { buildSnapshot } from "@/lib/snapshot/build";
 import { readSnapshot, writeSnapshot } from "@/lib/snapshot/store";
-import { getSnapshot, MAX_AGE_MS, refreshSnapshot } from "@/lib/snapshot/refresh";
+import { getSnapshot, MAX_AGE_MS, refreshSnapshot, RETRY_AFTER_MS } from "@/lib/snapshot/refresh";
 
 const snap = (generatedAt: string) => ({ generatedAt, revenue: {}, books: [], newsletter: [], blog: [], sections: {} });
+let clock = Date.now();
 const settleAll = () => new Promise((r) => setTimeout(r, 0));
 
 beforeEach(() => {
+  // Each test starts past the retry window of the previous test's attempt.
+  clock += 2 * RETRY_AFTER_MS;
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(clock);
   vi.mocked(buildSnapshot).mockResolvedValue(snap("new") as never);
   vi.mocked(writeSnapshot).mockResolvedValue(undefined);
   vi.spyOn(console, "log").mockImplementation(() => {});
@@ -22,6 +27,32 @@ afterEach(async () => {
   vi.clearAllMocks();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();
+  vi.useRealTimers();
+});
+
+it("a failed or unwritable build is not retried on every visit: at most once per retry window", async () => {
+  vi.stubEnv("NODE_ENV", "production");
+  vi.spyOn(console, "error").mockImplementation(() => {});
+  vi.mocked(readSnapshot).mockResolvedValue(null);
+  vi.mocked(readFile).mockResolvedValue(JSON.stringify(snap("seed")) as never);
+  vi.mocked(writeSnapshot).mockRejectedValue(new Error("EACCES"));
+  await getSnapshot();
+  await settleAll();
+  await getSnapshot();
+  await getSnapshot();
+  expect(buildSnapshot).toHaveBeenCalledOnce();
+  vi.setSystemTime(Date.now() + RETRY_AFTER_MS);
+  await getSnapshot();
+  expect(buildSnapshot).toHaveBeenCalledTimes(2);
+});
+
+it("an unparseable generatedAt is treated as stale but still bounded by the retry window", async () => {
+  vi.stubEnv("NODE_ENV", "production");
+  vi.mocked(readSnapshot).mockResolvedValue(snap("garbage") as never);
+  await getSnapshot();
+  await settleAll();
+  await getSnapshot();
+  expect(buildSnapshot).toHaveBeenCalledOnce();
 });
 
 it("runs one build at a time, then build → write; a later call starts a new run", async () => {
