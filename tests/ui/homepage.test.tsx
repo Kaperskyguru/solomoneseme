@@ -191,8 +191,8 @@ describe("import boundaries", () => {
     }
   });
 
-  it("page.tsx takes from lib/ only store, split, format and links", () => {
+  it("page.tsx takes from lib/ only refresh, store, split, format and links", () => {
     const libs = imports(src("app/page.tsx")).map((i) => i.from).filter((f) => f.startsWith("@/lib/"));
-    for (const f of libs) expect(["@/lib/snapshot/store", "@/lib/split", "@/lib/format", "@/lib/links"]).toContain(f);
+    for (const f of libs) expect(["@/lib/snapshot/refresh", "@/lib/snapshot/store", "@/lib/split", "@/lib/format", "@/lib/links"]).toContain(f);
   });
 });
