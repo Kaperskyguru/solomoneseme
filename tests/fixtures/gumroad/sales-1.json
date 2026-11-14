@@ -1,0 +1,5 @@
+{"success":true,"sales":[
+{"id":"s1","product_id":"pA","price":1900,"currency":"usd","refunded":false,"created_at":"2026-10-20T10:00:00Z"},
+{"id":"s2","product_id":"pA","price":0,"currency":"usd","refunded":false,"created_at":"2026-10-21T10:00:00Z"},
+{"id":"s3","product_id":"pX","price":5000,"currency":"usd","refunded":false,"created_at":"2026-10-21T10:00:00Z"}
+],"next_page_key":"k2","next_page_url":"/v2/sales?page_key=k2"}

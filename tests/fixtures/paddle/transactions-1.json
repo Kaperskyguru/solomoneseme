@@ -1,0 +1,5 @@
+{"data":[
+{"id":"txn_prof","status":"completed","billed_at":"2026-10-20T10:00:00.000Z","currency_code":"USD","items":[{"price":{"id":"pri_prof"}}],"details":{"line_items":[{"id":"txnitm_p","price_id":"pri_prof","totals":{"total":"1900"}}]}},
+{"id":"txn_mb","status":"completed","billed_at":"2026-10-21T10:00:00.000Z","currency_code":"USD","items":[{"price":{"id":"pri_mb"}}],"details":{"line_items":[{"id":"txnitm_m","price_id":"pri_mb","totals":{"total":"9900"}}]}},
+{"id":"txn_mix","status":"completed","billed_at":"2026-10-22T10:00:00.000Z","currency_code":"EUR","items":[{"price":{"id":"pri_prof"}},{"price":{"id":"pri_mb"}}],"details":{"line_items":[{"id":"txnitm_a","price_id":"pri_prof","totals":{"total":"1800","tax":"300"}},{"id":"txnitm_b","price_id":"pri_mb","totals":{"total":"4000"}}]}}],
+"meta":{"pagination":{"per_page":200,"next":"https://api.paddle.com/transactions?after=txn_mix&status=completed","has_more":true}}}

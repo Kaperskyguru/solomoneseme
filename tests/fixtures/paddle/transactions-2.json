@@ -1,0 +1,3 @@
+{"data":[
+{"id":"txn_prof2","status":"completed","billed_at":"2026-10-23T10:00:00.000Z","currency_code":"USD","items":[{"price":{"id":"pri_prof"}}],"details":{"line_items":[{"id":"txnitm_q","price_id":"pri_prof","totals":{"total":"1900"}}]}}],
+"meta":{"pagination":{"per_page":200,"next":"https://api.paddle.com/transactions?after=txn_prof2&status=completed","has_more":false}}}

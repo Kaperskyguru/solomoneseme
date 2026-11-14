@@ -1,0 +1,123 @@
+{
+ "message": "ok",
+ "status": true,
+ "data": {
+  "payment_requests": {
+   "current_page": 1,
+   "data": [
+    {
+     "uuid": "u1",
+     "ref": "AsP-fake1",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "scholarship_page"
+     },
+     "status": "successful",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u2",
+     "ref": "AsP-fake2",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "learn-tech"
+     },
+     "status": "successful",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u3",
+     "ref": "AsP-fake3",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "9999.00",
+     "meta_data": {
+      "source": "ai_automation_scholarship"
+     },
+     "status": "awaiting_verification",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "successful",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u4",
+     "ref": "AsP-fake4",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "scholarship_page"
+     },
+     "status": "awaiting_verification",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "pending",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    },
+    {
+     "uuid": "u5",
+     "ref": "AsP-fake5",
+     "intent": "make_payment",
+     "currency": "NGN",
+     "amount": "15000",
+     "meta_data": {
+      "source": "scholarship_page"
+     },
+     "status": "failed",
+     "created_at": "2026-10-20T10:00:00.000000Z",
+     "last_transaction": {
+      "status": "failed",
+      "created_at": "2026-10-20T10:05:00.000000Z"
+     },
+     "customer": {
+      "email": "x***@example.com",
+      "first_name": "Fake",
+      "last_name": "Person",
+      "phone_number": "000"
+     }
+    }
+   ],
+   "next_page_url": "https://api.asyncpay.io/v1/payment-requests?per_page=50&page=2",
+   "per_page": 50
+  }
+ }
+}
