@@ -45,7 +45,9 @@ export function BooksShelf({ books }: { books: Book[] }) {
   if (books.length === 0) return null;
   const downloads = books.reduce((sum, b) => sum + b.downloads, 0);
   const { avg, count } = shelf.rating;
-  const [top, ...rest] = [...books].sort((a, b) => b.downloads - a.downloads);
+  // Featured = best seller; the shelf keeps the snapshot order (latest to oldest).
+  const top = books.reduce((best, b) => (b.downloads > best.downloads ? b : best));
+  const rest = books.filter((b) => b !== top);
   return (
     <>
       <div className="grid items-center gap-8 sm:grid-cols-[auto_minmax(0,1fr)]">

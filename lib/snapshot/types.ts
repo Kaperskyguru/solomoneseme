@@ -8,6 +8,8 @@ export type Book = {
   cover: string;
   priceLabel: string;
   downloads: number;
+  /** First sale date (Gumroad gives no release date); absent when the book has no sales yet. */
+  releasedAt?: string;
   rating?: { avg: number; count: number };
 };
 export type YoutubeSummary = {

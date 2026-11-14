@@ -111,8 +111,8 @@ describe("homepage", () => {
     expect(container.textContent).not.toContain("Company");
     for (const pill of screen.getAllByTestId("revenue-pill")) expect(pill.textContent).not.toContain("—");
     for (const pill of screen.getAllByTestId("compact-pill")) expect(pill.textContent).not.toContain("—");
-    expect(container.innerHTML).not.toMatch(/contentre\.io|nuxifysaas\.com/);
-    expect(screen.getAllByText("Archived")).toHaveLength(2);
+    expect(container.innerHTML).not.toMatch(/contentre\.io|nuxifysaas\.com|techpad\.ink|aifordevelopers\.dev|backendjoy\.com/);
+    expect(screen.getAllByText("Archived")).toHaveLength(5);
     for (const name of ["Backend Projects", "Backend Weekly", "Get Backend Jobs"]) {
       const row = screen.getAllByText(name).map((n) => n.closest("article")).find(Boolean)!;
       expect(row.querySelector("[data-testid=compact-pill]")!.textContent).toBe("$0/mo");
