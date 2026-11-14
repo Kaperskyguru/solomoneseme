@@ -63,5 +63,16 @@ export async function fetchBooks(src: GumroadSource, sales: GrSale[]): Promise<B
   }
   // A product whose sales never carried a name cannot be shown.
   for (const [id, b] of fromSales) if (!b.name) fromSales.delete(id);
-  return [...byId.values(), ...fromSales.values()].sort((a, b) => b.downloads - a.downloads);
+
+  // Release date = earliest sale of any kind (sales arrive newest first, so the last one seen wins).
+  const firstSale = new Map<string, string>();
+  for (const s of sales) if (s.product_id && s.created_at) firstSale.set(s.product_id, s.created_at);
+  const books = [...byId.values(), ...fromSales.values()];
+  for (const b of books) {
+    const at = firstSale.get(b.id);
+    if (at) b.releasedAt = new Date(at).toISOString();
+  }
+  // Latest to oldest; a book with no sales yet is the newest.
+  const t = (b: Book) => (b.releasedAt ? Date.parse(b.releasedAt) : Infinity);
+  return books.sort((a, b) => t(b) - t(a));
 }

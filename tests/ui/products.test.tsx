@@ -113,7 +113,7 @@ describe("Backend Projects / Weekly / Jobs (owner decision: untracked solo listi
     const { compact } = splitProducts(solo, {});
     const ordered = orderCompact(compact).map((p) => p.id);
     expect(ordered.slice(0, 3)).toEqual(ids);
-    expect(ordered.slice(-2).sort()).toEqual(["contentre", "nuxifysaas"]);
+    expect(ordered.slice(-5).sort()).toEqual(["aifordevelopers", "backendjoy", "contentre", "nuxifysaas", "techpad"]);
     const chartIds = buildChartData(products, {}, new Date("2026-11-12T00:00:00Z")).products.map((p) => p.id);
     for (const id of ids) expect(chartIds).not.toContain(id);
   });
@@ -248,22 +248,21 @@ describe("CompactList", () => {
 
 describe("archived products", () => {
   const archived = products.filter((p) => p.badge?.kind === "archived");
-  it("contentre and nuxifysaas are archived", () => {
-    expect(archived.map((p) => p.id).sort()).toEqual(["contentre", "nuxifysaas"]);
+  it("contentre, nuxifysaas, techpad, aifordevelopers and backendjoy are archived", () => {
+    expect(archived.map((p) => p.id).sort()).toEqual(["aifordevelopers", "backendjoy", "contentre", "nuxifysaas", "techpad"]);
   });
   it("compact list renders them with no anchor, no URL, and an Archived badge", () => {
     const { container } = render(<CompactList products={archived} />);
     expect(container.querySelector("a")).toBeNull();
-    expect(container.innerHTML).not.toContain("contentre.io");
-    expect(container.innerHTML).not.toContain("nuxifysaas.com");
-    expect(screen.getAllByText("Archived").length).toBe(2);
+    expect(container.innerHTML).not.toMatch(/contentre\.io|nuxifysaas\.com|techpad\.ink|aifordevelopers\.dev|backendjoy\.com/);
+    expect(screen.getAllByText("Archived").length).toBe(5);
     expect(screen.getByText("Contentre")).toBeTruthy();
   });
   it("ProductCard renders no anchor or URL for an archived product", () => {
     for (const p of archived) {
       const { container } = render(<ProductCard product={p} />);
       expect(container.querySelector("a")).toBeNull();
-      expect(container.innerHTML).not.toMatch(/contentre\.io|nuxifysaas\.com/);
+      expect(container.innerHTML).not.toMatch(/contentre\.io|nuxifysaas\.com|techpad\.ink|aifordevelopers\.dev|backendjoy\.com/);
       expect(screen.getByText("Archived")).toBeTruthy();
       cleanup();
     }

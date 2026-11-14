@@ -12,9 +12,9 @@ afterEach(() => vi.unstubAllGlobals());
 
 describe("fetchBooks", () => {
   const src = { provider: "gumroad", exclude: ["pX"] } satisfies Parameters<typeof fetchBooks>[0];
-  it("shelf sorted by downloads desc, excludes ids, free downloads counted", async () => {
+  it("excludes ids, free downloads counted", async () => {
     const books = await fetchBooks(src, []);
-    expect(books.map((b) => b.id)).toEqual(["pB", "pA", "pC"]);
+    expect(books.map((b) => b.id).sort()).toEqual(["pA", "pB", "pC"]);
     expect(books.find((b) => b.id === "pA")).toMatchObject({
       downloads: 50, priceLabel: "$0+", url: "https://gum.co/a", cover: "https://img/a.png", name: "Free Guide",
     });
@@ -61,13 +61,25 @@ describe("fetchBooks", () => {
     const fetchMock = route(products);
     vi.stubGlobal("fetch", fetchMock);
     const out = await fetchBooks(src, sales);
-    expect(out.map((b) => b.id)).toEqual(["pB", "pA", "pC", "pE", "pN"]);
+    expect(out.map((b) => b.id).sort()).toEqual(["pA", "pB", "pC", "pE", "pN"]);
     expect(out.find((b) => b.id === "pE")).toMatchObject({
       name: "Rust Essentials", downloads: 3, cover: "", priceLabel: "$12", url: "https://store.masteringbackend.com/l/rust",
     });
     expect(out.find((b) => b.id === "pB")!.downloads).toBe(120);
     expect(out.find((b) => b.id === "pN")!.url).toBe("https://solomoneseme.gumroad.com");
     expect((fetchMock.mock.calls as unknown[][]).every((c) => !String(c[0]).includes("/v2/sales"))).toBe(true); // uses the shared crawl
+  });
+  it("latest to oldest by first sale; a book with no sales yet comes first", async () => {
+    const sales = [ // newest first, as the API returns them
+      sale("1", "pA", "Free Guide", "a", "$0", { created_at: "2026-09-01T00:00:00Z" }),
+      sale("2", "pE", "Rust Essentials", "rust", "$12", { created_at: "2025-06-01T00:00:00Z" }),
+      sale("3", "pA", "Free Guide", "a", "$0", { created_at: "2025-03-01T00:00:00Z" }), // pA released 2025-03
+      sale("4", "pB", "Paid Book", "b", "$19", { created_at: "2024-01-01T00:00:00Z", refunded: true }), // refunds still date a release
+    ];
+    const out = await fetchBooks(src, sales);
+    expect(out.map((b) => b.id)).toEqual(["pC", "pE", "pA", "pB"]);
+    expect(out.find((b) => b.id === "pA")!.releasedAt).toBe("2025-03-01T00:00:00.000Z");
+    expect(out.find((b) => b.id === "pC")!.releasedAt).toBeUndefined();
   });
   it("unpublished/deleted products do not re-enter via sales", async () => {
     vi.stubGlobal("fetch", route({ success: true, products: [

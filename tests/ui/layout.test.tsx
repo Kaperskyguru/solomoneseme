@@ -77,7 +77,7 @@ describe("product split by tracking", () => {
   });
   it("an untracked product renders in compact with a $0/mo badge", () => {
     const { compact } = splitProducts(solo, {});
-    const contentre = compact.find((p) => p.id === "techpad")!;
+    const contentre = compact.find((p) => p.id === "enterprisevue")!;
     expect(contentre).toBeTruthy();
     render(<CompactList products={[contentre]} />);
     expect(screen.getByText("$0/mo")).toBeTruthy();
