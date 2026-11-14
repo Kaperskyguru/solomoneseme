@@ -2,7 +2,7 @@ import { Banner } from "@/components/Banner";
 import { Bio } from "@/components/Bio";
 import { site } from "@/config/site";
 import { products } from "@/config/products";
-import { readSnapshot } from "@/lib/snapshot/store";
+import { getSnapshot } from "@/lib/snapshot/refresh";
 import { splitProducts, orderCompact, buildChartData, visibleSections, productStatus, revenueUpdatedAt } from "@/lib/split";
 import { CompactList } from "@/components/CompactList";
 import { MbCard } from "@/components/MbCard";
@@ -26,7 +26,7 @@ export const dynamic = "force-dynamic";
  * sticky aside; right column 56px top / 96px bottom; top-level sections pt-16, startup sub-blocks mt-12.
  */
 export default async function Home() {
-  const snapshot = await readSnapshot();
+  const snapshot = await getSnapshot();
   const revenue = snapshot?.revenue ?? {};
   const solo = products.filter((p) => p.group === "solo");
   const { cards, compact } = splitProducts(solo, revenue);
